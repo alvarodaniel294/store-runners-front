@@ -1,12 +1,13 @@
-package com.example.storerunner.ui.notifications
+package com.example.storerunner.ui.discounts
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.storerunner.models.Discount
 import com.example.storerunner.models.Item
 import com.example.storerunner.repositories.StoreRepository
 
-class NotificationsViewModel : ViewModel() {
+class DiscountsViewModel : ViewModel() {
 
     private var mStoreRepository: StoreRepository =
         StoreRepository.StoreRepositoryObject.getInstance()
@@ -18,5 +19,9 @@ class NotificationsViewModel : ViewModel() {
 
     fun getAllItems(): LiveData<MutableList<Item>> {
         return mStoreRepository.getAllItems()
+    }
+
+    fun getAllDiscounts():LiveData<MutableList<Discount>>{
+        return mStoreRepository.getAllDiscounts()
     }
 }
