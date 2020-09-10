@@ -2,6 +2,7 @@ package com.example.storerunner.repositories
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.storerunner.models.Discount
 import com.example.storerunner.models.Item
 import com.example.storerunner.networking.ApiHelper
 import retrofit2.Call
@@ -32,7 +33,7 @@ class StoreRepository {
                 call: Call<MutableList<Item>>,
                 response: Response<MutableList<Item>>
             ) {
-                Log.d("daniel", "response successfull" )
+                Log.d("daniel", "response successfull")
 
                 if (response.isSuccessful) {
                     Log.d("daniel", response.body().toString())
@@ -41,5 +42,25 @@ class StoreRepository {
             }
         })
         return mItems
+    }
+
+    fun getAllDiscounts(): MutableLiveData<MutableList<Discount>> {
+        val mDiscounts: MutableLiveData<MutableList<Discount>> = MutableLiveData()
+        ApiHelper.getApi().getAllDiscounts().enqueue(object : Callback<MutableList<Discount>> {
+            override fun onFailure(call: Call<MutableList<Discount>>, t: Throwable) {
+                Log.d("daniel", "failed request")
+                Log.d("daniel", t.message.toString())
+            }
+
+            override fun onResponse(
+                call: Call<MutableList<Discount>>,
+                response: Response<MutableList<Discount>>
+            ) {
+                if (response.isSuccessful) {
+                    mDiscounts.value = response.body()
+                }
+            }
+        })
+        return mDiscounts
     }
 }
