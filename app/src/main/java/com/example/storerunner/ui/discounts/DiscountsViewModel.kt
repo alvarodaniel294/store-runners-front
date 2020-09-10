@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.storerunner.models.Discount
 import com.example.storerunner.models.Item
+import com.example.storerunner.models.ItemCategory
 import com.example.storerunner.repositories.StoreRepository
 
 class DiscountsViewModel : ViewModel() {

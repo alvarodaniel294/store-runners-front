@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.storerunner.models.Discount
 import com.example.storerunner.models.Item
+import com.example.storerunner.models.ItemCategory
 import com.example.storerunner.networking.ApiHelper
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,6 +43,31 @@ class StoreRepository {
             }
         })
         return mItems
+    }
+
+    fun getAllCategories(): MutableLiveData<MutableList<ItemCategory>> {
+        val mCategories: MutableLiveData<MutableList<ItemCategory>> = MutableLiveData()
+        ApiHelper.getApi().getAllCategories().enqueue(object : Callback<MutableList<ItemCategory>> {
+            override fun onFailure(call: Call<MutableList<ItemCategory>>, t: Throwable) {
+                Log.d("daniel", "failed request")
+                Log.d("daniel", t.message.toString())
+            }
+
+            override fun onResponse(
+                call: Call<MutableList<ItemCategory>>,
+                response: Response<MutableList<ItemCategory>>
+            ) {
+                Log.d("daniel", "response successfull")
+
+                if (response.isSuccessful) {
+                    Log.d("daniel", response.body().toString())
+                    mCategories.value = response.body()
+                }
+            }
+
+        }
+        )
+        return mCategories
     }
 
     fun getAllDiscounts(): MutableLiveData<MutableList<Discount>> {
