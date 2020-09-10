@@ -36,9 +36,9 @@ class ItemCategoryAdapter(private val itemCategoryList: MutableList<ItemCategory
         holder.categoryNameTextView.text = item.name
         holder.categoryDescriptionTextView.text = item.description
         holder.categoryNumberTextView.text = item.categoryNumber
-        Glide.with(holder.itemView.context)
-            .load("https://media.informabtl.com/wp-content/uploads/2017/03/Category_Killer.png")
-            .into(holder.categoryImageVew)
+//        Glide.with(holder.itemView.context)
+//            .load(item.webImage)
+//            .into(holder.categoryImageVew)
     }
 
 }
