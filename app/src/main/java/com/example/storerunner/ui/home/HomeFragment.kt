@@ -15,7 +15,6 @@ import com.example.storerunner.adapters.ItemCategoryAdapter
 import com.example.storerunner.models.Item
 import com.example.storerunner.models.ItemCategory
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_notifications.*
 
 class HomeFragment : Fragment() {
 
