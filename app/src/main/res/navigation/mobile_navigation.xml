@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/items_list"
         android:name="com.example.storerunner.ui.items.ItemsFragment"
-        android:label="EGG"
-        tools:layout="@layout/fragment_items"></fragment>
+        android:label="@string/item_list"
+        tools:layout="@layout/fragment_items" />
 
 </navigation>

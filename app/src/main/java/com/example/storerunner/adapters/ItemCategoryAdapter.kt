@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.storerunner.Constants
 import com.example.storerunner.R
 import com.example.storerunner.interfaces.ItemCategoryInterface
 import com.example.storerunner.models.ItemCategory
@@ -38,14 +39,15 @@ class ItemCategoryAdapter(
     override fun onBindViewHolder(holder: ItemCategoryViewHolder, position: Int) {
         val item = itemCategoryList[position]
         holder.categoryNameTextView.text = item.name
-        holder.categoryNumberTextView.text = holder.itemView.context.getString(R.string.category_number, item.categoryNumber)
+        holder.categoryNumberTextView.text =
+            holder.itemView.context.getString(R.string.category_number, item.categoryNumber)
 
         holder.itemView.setOnClickListener {
             listener.goToItemsCategory(item.categoryId)
         }
 
         Glide.with(holder.itemView.context)
-            .load("http://3.90.249.235" + item.webImage)
+            .load(Constants.IP_ADDRESS + item.webImage)
             .into(holder.categoryImageVew)
     }
 

@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.storerunner.Constants
 import com.example.storerunner.R
 import com.example.storerunner.models.Item
 import kotlinx.android.synthetic.main.container_item.view.*
@@ -23,14 +24,15 @@ class ItemAdapter(private val itemList: MutableList<Item>) :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = itemList[position]
         holder.itemNameTextView.text = item.name
-        holder.itemNumberTextView.text = holder.itemView.context.getString(R.string.item_number, item.itemNumber)
+        holder.itemNumberTextView.text =
+            holder.itemView.context.getString(R.string.item_number, item.itemNumber)
         holder.itemPriceTextView.text =
             holder.itemView.context.getString(R.string.price, item.price)
         holder.itemQuantityTextView.text =
             holder.itemView.context.getString(R.string.stock, item.itemQuantity)
 
         Glide.with(holder.itemView.context)
-            .load("http://3.90.249.235" + item.webImage)
+            .load(Constants.IP_ADDRESS + item.webImage)
             .into(holder.itemImageView)
     }
 
