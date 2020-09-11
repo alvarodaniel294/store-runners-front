@@ -1,11 +1,9 @@
 package com.example.storerunner.networking
 
 import androidx.lifecycle.MutableLiveData
-import com.example.storerunner.models.Discount
-import com.example.storerunner.models.Item
-import com.example.storerunner.models.ItemCart
-import com.example.storerunner.models.ItemCategory
+import com.example.storerunner.models.*
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -31,4 +29,7 @@ interface StoreApi {
 
     @PUT("shoppingCar/update")
     fun updateShoppingCart(@Body itemCart: ItemCart):Call<ItemCart>
+
+    @POST("shoppingCar/save")
+    fun addItemToCart(@Body itemToSave:ItemToAddToCart):Call<ItemToAddToCart>
 }

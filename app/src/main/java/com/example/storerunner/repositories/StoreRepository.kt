@@ -2,10 +2,7 @@ package com.example.storerunner.repositories
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.storerunner.models.Discount
-import com.example.storerunner.models.Item
-import com.example.storerunner.models.ItemCart
-import com.example.storerunner.models.ItemCategory
+import com.example.storerunner.models.*
 import com.example.storerunner.networking.ApiHelper
 import retrofit2.Call
 import retrofit2.Callback
@@ -150,5 +147,26 @@ class StoreRepository {
             }
         })
         return mShoppingCart
+    }
+
+    fun addItemToCart(itemToAddToCart: ItemToAddToCart): MutableLiveData<ItemToAddToCart> {
+        val mItemToAddToCart: MutableLiveData<ItemToAddToCart> = MutableLiveData()
+        ApiHelper.getApi().addItemToCart(itemToAddToCart)
+            .enqueue(object : Callback<ItemToAddToCart> {
+                override fun onFailure(call: Call<ItemToAddToCart>, t: Throwable) {
+                    Log.d("daniel", "failed request")
+                    Log.d("daniel", t.message.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<ItemToAddToCart>,
+                    response: Response<ItemToAddToCart>
+                ) {
+                    if (response.isSuccessful) {
+                        mItemToAddToCart.value = response.body()
+                    }
+                }
+            })
+        return mItemToAddToCart
     }
 }
