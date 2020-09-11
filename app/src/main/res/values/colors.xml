@@ -6,4 +6,6 @@
     <color name="transparent">#BF000000</color>
     <color name="textWhite">#FDFFFF</color>
     <color name="iconColor">#ee253d</color>
+    <color name="colorPrimaryTextBlack">#dd000000</color>
+
 </resources>

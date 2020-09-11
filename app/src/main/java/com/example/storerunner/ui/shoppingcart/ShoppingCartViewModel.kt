@@ -16,4 +16,8 @@ class ShoppingCartViewModel:ViewModel() {
     fun updateItemCart(itemCart: ItemCart):LiveData<ItemCart>{
         return mStoreRepository.updateShoppingCart(itemCart)
     }
+
+    fun deleteFromCart(itemId:Number):LiveData<Unit>{
+        return mStoreRepository.deleteFromCart(itemId)
+    }
 }

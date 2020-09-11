@@ -4,11 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.storerunner.models.*
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface StoreApi {
 
@@ -32,4 +28,7 @@ interface StoreApi {
 
     @POST("shoppingCar/save")
     fun addItemToCart(@Body itemToSave:ItemToAddToCart):Call<ItemToAddToCart>
+
+    @DELETE("shoppingCar/delete/{cartId}")
+    fun deleteFromShoppingCart(@Path("cartId") cartId:Number):Call<Unit>
 }
