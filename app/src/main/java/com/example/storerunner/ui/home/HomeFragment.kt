@@ -4,21 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.storerunner.R
-import com.example.storerunner.adapters.ItemAdapter
 import com.example.storerunner.adapters.ItemCategoryAdapter
-import com.example.storerunner.models.Item
+import com.example.storerunner.interfaces.ItemCategoryInterface
 import com.example.storerunner.models.ItemCategory
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), ItemCategoryInterface {
 
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,10 +40,16 @@ class HomeFragment : Fragment() {
         homeViewModel.getAllCategories().observe(viewLifecycleOwner, Observer {
             initRecycler(it)
         })
+        navController = Navigation.findNavController(view)
     }
 
     private fun initRecycler(mutableList: MutableList<ItemCategory>) {
-        itemCategoryRecycler.adapter = ItemCategoryAdapter(mutableList)
+        itemCategoryRecycler.adapter = ItemCategoryAdapter(mutableList, this)
         (itemCategoryRecycler.adapter as ItemCategoryAdapter).notifyDataSetChanged()
+    }
+
+    override fun goToItemsCategory(categoryId: Int) {
+        val bundle = bundleOf("categoryId" to categoryId)
+        navController.navigate(R.id.action_navigation_home_to_items_list, bundle)
     }
 }
