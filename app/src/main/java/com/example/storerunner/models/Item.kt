@@ -11,6 +11,7 @@ data class Item(
     var posX: Double,
     var posY: Double,
     var position: Number,
-    var item_categoryId: Number
+    var item_categoryId: Number,
+    var discountses: List<Discount>
 ) {
 }

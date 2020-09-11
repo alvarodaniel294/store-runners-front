@@ -6,7 +6,7 @@ data class Discount(
     val discountNumber: String,
     val discountPercent: Number,
     val name: String,
-    val itemId_Items: Number,
+    val itemId_Items: Int,
     val webImage: String
 ) {
 }

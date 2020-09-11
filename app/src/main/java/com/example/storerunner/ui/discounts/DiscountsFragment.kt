@@ -3,19 +3,21 @@ package com.example.storerunner.ui.discounts
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.storerunner.R
 import com.example.storerunner.adapters.DiscountsAdapter
 import com.example.storerunner.models.Discount
+import com.example.storerunner.models.Item
+import com.example.storerunner.ui.shoppingcart.ShoppingCartViewModel
 import kotlinx.android.synthetic.main.fragment_discounts.*
 
 class DiscountsFragment : Fragment() {
 
     private lateinit var discountsViewModel: DiscountsViewModel
+    private lateinit var shoppingCartViewModel: ShoppingCartViewModel
     private lateinit var navController: NavController
 
     override fun onCreateView(
@@ -26,6 +28,7 @@ class DiscountsFragment : Fragment() {
         setHasOptionsMenu(true)
         discountsViewModel =
             ViewModelProviders.of(this).get(DiscountsViewModel::class.java)
+        shoppingCartViewModel = ViewModelProviders.of(this).get(ShoppingCartViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_discounts, container, false)
         return root
     }
@@ -36,7 +39,25 @@ class DiscountsFragment : Fragment() {
         navController = Navigation.findNavController(view)
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.setHasFixedSize(true)
-        discountsViewModel.getAllDiscounts().observe(viewLifecycleOwner, Observer {
+
+        val finalList: MutableList<Discount> = mutableListOf()
+        val mItems: MutableLiveData<MutableList<Discount>> = MutableLiveData()
+
+        discountsViewModel.getAllDiscounts().observe(viewLifecycleOwner, Observer { discounts ->
+            shoppingCartViewModel.getAllShoppingCarts()
+                .observe(viewLifecycleOwner, Observer { items ->
+                    items.forEach { item ->
+                        discounts.forEach { discount ->
+                            if (item.cartId == discount.itemId_Items) {
+                                finalList.add(discount)
+                            }
+                        }
+                    }
+                    mItems.value = finalList
+                })
+        })
+
+        mItems.observe(viewLifecycleOwner, Observer {
             initRecycler(it)
         })
     }
@@ -52,8 +73,8 @@ class DiscountsFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.cart_menu ->{
+        when (item.itemId) {
+            R.id.cart_menu -> {
                 openShoppingCart()
             }
         }
