@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.storerunner.Constants
 import com.example.storerunner.R
 import com.example.storerunner.models.ItemCart
 import com.google.android.material.button.MaterialButton
@@ -44,7 +45,7 @@ class ShoppingCartAdapter(
         holder.buttonRemove.setOnClickListener {
             listener.onRemoveQuantity(item)
         }
-        Glide.with(context).load("http://3.90.249.235" + item.webImage).into(holder.image)
+        Glide.with(context).load(Constants.IP_ADDRESS + item.webImage).into(holder.image)
     }
 
     override fun getItemCount(): Int {
