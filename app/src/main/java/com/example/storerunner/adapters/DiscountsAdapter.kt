@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.storerunner.Constants
 import com.example.storerunner.R
 import com.example.storerunner.models.Discount
 import kotlinx.android.synthetic.main.container_discounts_item.view.*
@@ -28,7 +29,7 @@ class DiscountsAdapter(private val discountList: MutableList<Discount>) :
         val item = discountList[position]
         holder.title.text = item.name
         holder.amount.text = item.discountPercent.toString() + "%"
-        //Glide.with(context).load(item.name).into(holder.image)
+        Glide.with(context).load(Constants.IP_ADDRESS + item.webImage).into(holder.image)
 
     }
 

@@ -1,7 +1,7 @@
 package com.example.storerunner.models
 
 data class ItemCart(
-    var cartId: Number,
+    var cartId: Int,
     var shop_categoryId: Number,
     var description: String,
     var itemNumber: String,
