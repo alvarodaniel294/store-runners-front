@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        style="@style/CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/itemImageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:padding="4dp" />
+
+            <TextView
+                android:id="@+id/itemNameTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/itemImageView"
+                android:text="Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/itemPriceTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/itemNameTxt"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@id/itemImageView"
+                android:text="13.3 Inch, 256 GB"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:id="@+id/itemNumberTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/itemPriceTxt"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@id/itemImageView"
+                android:text="INR 56990"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/itemQuantityTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/itemNumberTxt"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@id/itemImageView"
+                android:text="INR 56990"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/addToCartButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/itemQuantityTxt"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:text="Add to cart"
+                android:backgroundTint="@color/colorAccent"
+                android:layout_toEndOf="@id/itemImageView" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

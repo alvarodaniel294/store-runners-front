@@ -9,17 +9,49 @@
         android:id="@+id/navigation_home"
         android:name="com.example.storerunner.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_items_list"
+            app:destination="@id/items_list" />
+        <action
+            android:id="@+id/action_navigation_home_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.storerunner.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.storerunner.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.example.storerunner.ui.discounts.DiscountsFragment"
+        android:label="@string/title_discounts"
+        tools:layout="@layout/fragment_discounts" >
+        <action
+            android:id="@+id/action_navigation_notifications_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/items_list"
+        android:name="com.example.storerunner.ui.items.ItemsFragment"
+        android:label="@string/item_list"
+        tools:layout="@layout/fragment_items" />
+
+    <fragment
+        android:id="@+id/shoppingCartFragment"
+        android:name="com.example.storerunner.ui.shoppingcart.ShoppingCartFragment"
+        android:label="@string/title_shopping_cart"
+        tools:layout="@layout/fragment_shopping_cart" />
+    <fragment
+        android:id="@+id/navigation_aboutus"
+        android:name="com.example.storerunner.ui.aboutus.AboutUsFragment"
+        android:label="@string/title_aboutus"
+        tools:layout="@layout/fragment_about_us" />
 </navigation>

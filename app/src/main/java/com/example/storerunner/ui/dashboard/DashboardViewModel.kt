@@ -3,11 +3,18 @@ package com.example.storerunner.ui.dashboard
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.storerunner.models.ItemCart
+import com.example.storerunner.repositories.StoreRepository
 
 class DashboardViewModel : ViewModel() {
+    private var mStoreRepository: StoreRepository =
+        StoreRepository.StoreRepositoryObject.getInstance()
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+    fun getAllShoppingCarts():LiveData<MutableList<ItemCart>>{
+        return mStoreRepository.getAllShoppingCarts()
     }
-    val text: LiveData<String> = _text
+
+    fun updateItemCart(itemCart: ItemCart):LiveData<ItemCart>{
+        return mStoreRepository.updateShoppingCart(itemCart)
+    }
 }
