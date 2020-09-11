@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_baseline_local_offer_24"
         android:title="@string/title_discounts" />
 
+    <item
+        android:id="@+id/navigation_aboutus"
+        android:icon="@drawable/ic_baseline_people_alt_24"
+        android:title="@string/title_aboutus" />
+
 </menu>

@@ -4,6 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_discounts">Discounts</string>
+    <string name="title_aboutus">About Us</string>
     <string name="title_cart">Cart</string>
     <string name="item_list">Item List</string>
     <string name="price"> Price: %1$s $ </string>

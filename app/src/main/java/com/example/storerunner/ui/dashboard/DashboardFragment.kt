@@ -1,6 +1,7 @@
 package com.example.storerunner.ui.dashboard
 
 import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
@@ -20,6 +21,10 @@ import com.peterlaurence.mapview.core.TileStreamProvider
 import com.peterlaurence.mapview.demo.fragments.views.MapMarker
 import com.peterlaurence.mapview.demo.fragments.views.MarkerCallout
 import com.peterlaurence.mapview.markers.MarkerTapListener
+import com.peterlaurence.mapview.paths.PathPoint
+import com.peterlaurence.mapview.paths.PathView
+import com.peterlaurence.mapview.paths.addPathView
+import com.peterlaurence.mapview.paths.toFloatArray
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 import java.io.InputStream
 
@@ -29,19 +34,19 @@ class DashboardFragment : Fragment() {
     private lateinit var navController: NavController
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
         dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+            ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
         root.also {
             parentView = it.mapContainer as ViewGroup
 
             dashboardViewModel.getAllShoppingCarts().observe(viewLifecycleOwner, Observer {
-                context?.let {ctx->
+                context?.let { ctx ->
                     makeMapView(ctx, it)?.addToFragment()
                 }
             })
@@ -89,7 +94,7 @@ class DashboardFragment : Fragment() {
         mapView.configure(config)
         mapView.defineBounds(0.0, 0.0, 1.0, 1.0)
 
-        for (cartItem in cartList){
+        for (cartItem in cartList) {
             mapView.addNewMarker(cartItem.posX, cartItem.posY, cartItem.name, cartItem.itemQuantity)
         }
 
@@ -112,16 +117,17 @@ class DashboardFragment : Fragment() {
         inflater.inflate(R.menu.cart_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.cart_menu ->{
+        when (item.itemId) {
+            R.id.cart_menu -> {
                 openShoppingCart()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun MapView.addNewMarker(x: Double, y: Double, name: String, quantity:Number) {
+    private fun MapView.addNewMarker(x: Double, y: Double, name: String, quantity: Number) {
         val marker = MapMarker(context, x, y, name, quantity).apply {
             setImageResource(R.drawable.map_marker)
         }
