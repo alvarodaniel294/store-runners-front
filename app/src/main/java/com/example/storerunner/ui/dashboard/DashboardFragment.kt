@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.storerunner.R
 import com.example.storerunner.models.ItemCart
+import com.example.storerunner.ui.shoppingcart.ShoppingCartViewModel
 import com.peterlaurence.mapview.MapView
 import com.peterlaurence.mapview.MapViewConfiguration
 import com.peterlaurence.mapview.api.addCallout
@@ -32,6 +33,7 @@ class DashboardFragment : Fragment() {
     private lateinit var parentView: ViewGroup
     private lateinit var dashboardViewModel: DashboardViewModel
     private lateinit var navController: NavController
+    private lateinit var shoppingCartViewModel: ShoppingCartViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,15 +43,25 @@ class DashboardFragment : Fragment() {
         setHasOptionsMenu(true)
         dashboardViewModel =
             ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        shoppingCartViewModel =
+            ViewModelProviders.of(this).get(ShoppingCartViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
         root.also {
             parentView = it.mapContainer as ViewGroup
 
-            dashboardViewModel.getAllShoppingCarts().observe(viewLifecycleOwner, Observer {
-                context?.let { ctx ->
-                    makeMapView(ctx, it)?.addToFragment()
-                }
-            })
+            dashboardViewModel.getAllShoppingCarts()
+                .observe(viewLifecycleOwner, Observer { shopList ->
+                    context?.let { ctx ->
+                        if (shopList.size > 1) {
+                            shoppingCartViewModel.optimizeList(shopList)
+                                .observe(viewLifecycleOwner, Observer { optimizedShopList ->
+                                    makeMapView(ctx, optimizedShopList)?.addToFragment()
+                                })
+                        } else {
+                            makeMapView(ctx, shopList)?.addToFragment()
+                        }
+                    }
+                })
         }
         return root
     }
@@ -109,6 +121,34 @@ class DashboardFragment : Fragment() {
                 }
             }
         })
+
+        val pathView = PathView(context)
+        mapView.addPathView(pathView)
+
+        var pathPoints = mutableListOf<PathPoint>()
+
+        pathPoints.add(PathPoint(0.62, 0.92))
+
+        cartList.forEach {
+            val pathPoint = PathPoint(it.posX, it.posY)
+            pathPoints.add(pathPoint)
+        }
+
+        pathPoints.add(PathPoint(0.1, 0.87))
+
+        val pathList = listOfNotNull(
+            pathPoints.toFloatArray(mapView)
+        ).map {
+            object : PathView.DrawablePath {
+                override val visible: Boolean = true
+                override var path: FloatArray = it
+                override var paint: Paint? = null
+                override val width: Float? = null
+            }
+        }
+
+        pathView.updatePaths(pathList)
+
         return mapView
 
     }
