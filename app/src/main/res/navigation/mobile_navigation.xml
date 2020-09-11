@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_items_list"
             app:destination="@id/items_list" />
+        <action
+            android:id="@+id/action_navigation_home_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
     </fragment>
 
     <fragment
@@ -33,4 +36,9 @@
         android:label="@string/item_list"
         tools:layout="@layout/fragment_items" />
 
+    <fragment
+        android:id="@+id/shoppingCartFragment"
+        android:name="com.example.storerunner.ui.shoppingcart.ShoppingCartFragment"
+        android:label="@string/title_shopping_cart"
+        tools:layout="@layout/fragment_shopping_cart" />
 </navigation>

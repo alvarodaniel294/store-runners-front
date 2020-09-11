@@ -25,6 +25,8 @@ class HomeFragment : Fragment(), ItemCategoryInterface {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var navController: NavController
 
+    private lateinit var navController: NavController
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +41,7 @@ class HomeFragment : Fragment(), ItemCategoryInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
         itemCategoryRecycler.layoutManager = LinearLayoutManager(context)
         itemCategoryRecycler.setHasFixedSize(true)
         homeViewModel.getAllCategories().observe(viewLifecycleOwner, Observer {
@@ -60,5 +63,18 @@ class HomeFragment : Fragment(), ItemCategoryInterface {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.cart_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.cart_menu ->{
+                openShoppingCart()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun openShoppingCart() {
+        navController.navigate(R.id.action_navigation_home_to_shoppingCartFragment)
     }
 }

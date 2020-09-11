@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.storerunner.models.Discount
 import com.example.storerunner.models.Item
+import com.example.storerunner.models.ItemCart
 import com.example.storerunner.models.ItemCategory
 import com.example.storerunner.networking.ApiHelper
 import retrofit2.Call
@@ -111,5 +112,43 @@ class StoreRepository {
             })
 
         return mItems
+    }
+
+    fun getAllShoppingCarts(): MutableLiveData<MutableList<ItemCart>> {
+        Log.d("daniel", "GETALL SHOPPING CARTS")
+        val mShoppingCarts: MutableLiveData<MutableList<ItemCart>> = MutableLiveData()
+        ApiHelper.getApi().getAllShoppingCarts().enqueue(object : Callback<MutableList<ItemCart>> {
+            override fun onFailure(call: Call<MutableList<ItemCart>>, t: Throwable) {
+                Log.d("daniel", "failed request")
+                Log.d("daniel", t.message.toString())
+            }
+
+            override fun onResponse(
+                call: Call<MutableList<ItemCart>>,
+                response: Response<MutableList<ItemCart>>
+            ) {
+                if (response.isSuccessful) {
+                    mShoppingCarts.value = response.body()
+                }
+            }
+        })
+        return mShoppingCarts
+    }
+
+    fun updateShoppingCart(itemCart: ItemCart): MutableLiveData<ItemCart> {
+        val mShoppingCart: MutableLiveData<ItemCart> = MutableLiveData()
+        ApiHelper.getApi().updateShoppingCart(itemCart).enqueue(object : Callback<ItemCart> {
+            override fun onFailure(call: Call<ItemCart>, t: Throwable) {
+                Log.d("daniel", "failed request")
+                Log.d("daniel", t.message.toString())
+            }
+
+            override fun onResponse(call: Call<ItemCart>, response: Response<ItemCart>) {
+                if (response.isSuccessful) {
+                    mShoppingCart.value = response.body()
+                }
+            }
+        })
+        return mShoppingCart
     }
 }
