@@ -7,11 +7,13 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/CardView"
         android:layout_margin="4dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"
             android:padding="8dp">
 
             <ImageView
@@ -29,28 +31,16 @@
                 android:text="Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="#000000" />
-
             <TextView
-                android:id="@+id/categoryDescriptionTxt"
+                android:id="@+id/categoryNumberTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/categoryNameTxt"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_toEndOf="@id/categoryImageView"
-                android:text="13.3 Inch, 256 GB"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
-
-            <TextView
-                android:id="@+id/categoryNumberTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/categoryDescriptionTxt"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_toEndOf="@id/categoryImageView"
                 android:text="INR 56990"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textStyle="bold" />
 
         </RelativeLayout>

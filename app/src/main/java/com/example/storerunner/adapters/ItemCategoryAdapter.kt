@@ -5,18 +5,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.storerunner.R
+import com.example.storerunner.interfaces.ItemCategoryInterface
 import com.example.storerunner.models.ItemCategory
 import kotlinx.android.synthetic.main.category_item.view.*
 
-class ItemCategoryAdapter(private val itemCategoryList: MutableList<ItemCategory>) :
+class ItemCategoryAdapter(
+    private val itemCategoryList: MutableList<ItemCategory>,
+    private var listener: ItemCategoryInterface
+) :
     RecyclerView.Adapter<ItemCategoryAdapter.ItemCategoryViewHolder>() {
 
     class ItemCategoryViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         var categoryNameTextView: TextView = v.categoryNameTxt
-        var categoryDescriptionTextView: TextView = v.categoryDescriptionTxt
         var categoryNumberTextView: TextView = v.categoryNumberTxt
         var categoryImageVew: ImageView = v.categoryImageView
     }
@@ -34,11 +38,15 @@ class ItemCategoryAdapter(private val itemCategoryList: MutableList<ItemCategory
     override fun onBindViewHolder(holder: ItemCategoryViewHolder, position: Int) {
         val item = itemCategoryList[position]
         holder.categoryNameTextView.text = item.name
-        holder.categoryDescriptionTextView.text = item.description
-        holder.categoryNumberTextView.text = item.categoryNumber
-//        Glide.with(holder.itemView.context)
-//            .load(item.webImage)
-//            .into(holder.categoryImageVew)
+        holder.categoryNumberTextView.text = holder.itemView.context.getString(R.string.category_number, item.categoryNumber)
+
+        holder.itemView.setOnClickListener {
+            listener.goToItemsCategory(item.categoryId)
+        }
+
+        Glide.with(holder.itemView.context)
+            .load("http://3.90.249.235" + item.webImage)
+            .into(holder.categoryImageVew)
     }
 
 }

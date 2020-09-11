@@ -6,6 +6,7 @@ data class Item(
     var itemNumber: String,
     var itemQuantity: Number,
     var name: String,
-    var price: String
+    var price: String,
+    var webImage: String
 ) {
 }

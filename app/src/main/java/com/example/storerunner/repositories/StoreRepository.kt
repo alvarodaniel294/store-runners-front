@@ -89,4 +89,27 @@ class StoreRepository {
         })
         return mDiscounts
     }
+
+    fun getItemsByCategory(categoryId: Int): MutableLiveData<MutableList<Item>> {
+        val mItems: MutableLiveData<MutableList<Item>> = MutableLiveData()
+        ApiHelper.getApi().getItemsByCategoryId(categoryId)
+            .enqueue(object : Callback<MutableList<Item>> {
+                override fun onFailure(call: Call<MutableList<Item>>, t: Throwable) {
+                    Log.d("daniel", "failed request")
+                    Log.d("daniel", t.message.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<MutableList<Item>>,
+                    response: Response<MutableList<Item>>
+                ) {
+                    if (response.isSuccessful) {
+                        mItems.value = response.body()
+                    }
+                }
+
+            })
+
+        return mItems
+    }
 }

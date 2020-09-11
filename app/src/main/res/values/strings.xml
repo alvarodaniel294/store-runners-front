@@ -4,4 +4,8 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_discounts">Discounts</string>
+    <string name="price"> Price: %1$s $ </string>
+    <string name="stock"> %1$s available in stock </string>
+    <string name="item_number"> Item number: %1$s </string>
+    <string name="category_number"> Category number: %1$s </string>
 </resources>
