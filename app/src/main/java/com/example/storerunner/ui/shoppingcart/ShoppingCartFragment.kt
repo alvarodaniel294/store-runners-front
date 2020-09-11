@@ -40,6 +40,8 @@ class ShoppingCartFragment : Fragment(), ShoppingCartAdapter.ShoppingCartAdapter
     }
 
     private fun observeList(){
+        progressBar.visibility = View.VISIBLE
+        shopRecycler.visibility = View.GONE
         shoppingCartViewModel.getAllShoppingCarts().observe(viewLifecycleOwner, Observer {
             it?.let { list ->
                 initRecycler(list)
@@ -48,11 +50,14 @@ class ShoppingCartFragment : Fragment(), ShoppingCartAdapter.ShoppingCartAdapter
     }
 
     private fun initRecycler(list: MutableList<ItemCart>) {
+        progressBar.visibility = View.GONE
+        shopRecycler.visibility = View.VISIBLE
         shopRecycler.adapter = ShoppingCartAdapter(list, this)
         (shopRecycler.adapter as ShoppingCartAdapter).notifyDataSetChanged()
     }
 
     override fun onRemoveQuantity(item: ItemCart) {
+
         item.itemQuantity = item.itemQuantity.toInt() - 1
         Log.d("daniel", item.toString())
         shoppingCartViewModel.updateItemCart(item).observe(viewLifecycleOwner, Observer {
@@ -63,6 +68,7 @@ class ShoppingCartFragment : Fragment(), ShoppingCartAdapter.ShoppingCartAdapter
     }
 
     override fun onAddQuantity(item: ItemCart) {
+
 
         item.itemQuantity = item.itemQuantity.toInt() + 1
         Log.d("daniel", item.toString())
