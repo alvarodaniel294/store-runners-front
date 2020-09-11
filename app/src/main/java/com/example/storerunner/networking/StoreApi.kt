@@ -21,14 +21,17 @@ interface StoreApi {
     fun getItemsByCategoryId(@Path("categoryId") categoryId: Int): Call<MutableList<Item>>
 
     @GET("shoppingCar/findAll")
-    fun getAllShoppingCarts():Call<MutableList<ItemCart>>
+    fun getAllShoppingCarts(): Call<MutableList<ItemCart>>
 
     @PUT("shoppingCar/update")
-    fun updateShoppingCart(@Body itemCart: ItemCart):Call<ItemCart>
+    fun updateShoppingCart(@Body itemCart: ItemCart): Call<ItemCart>
 
     @POST("shoppingCar/save")
-    fun addItemToCart(@Body itemToSave:ItemToAddToCart):Call<ItemToAddToCart>
+    fun addItemToCart(@Body itemToSave: ItemToAddToCart): Call<ItemToAddToCart>
+
+    @POST("shoppingCar/optimize")
+    fun optimizeList(@Body shoppingList: MutableList<ItemCart>): Call<MutableList<ItemCart>>
 
     @DELETE("shoppingCar/delete/{cartId}")
-    fun deleteFromShoppingCart(@Path("cartId") cartId:Number):Call<Unit>
+    fun deleteFromShoppingCart(@Path("cartId") cartId: Number): Call<Unit>
 }

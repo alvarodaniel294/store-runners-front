@@ -46,7 +46,14 @@ class ShoppingCartFragment : Fragment(), ShoppingCartAdapter.ShoppingCartAdapter
         shopRecycler.visibility = View.GONE
         shoppingCartViewModel.getAllShoppingCarts().observe(viewLifecycleOwner, Observer {
             it?.let { list ->
-                initRecycler(list)
+                if (list.size > 1) {
+                    shoppingCartViewModel.optimizeList(it)
+                        .observe(viewLifecycleOwner, Observer { optimizedList ->
+                            initRecycler(optimizedList)
+                        })
+                } else {
+                    initRecycler(list)
+                }
             }
         })
     }

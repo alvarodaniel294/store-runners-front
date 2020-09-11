@@ -132,6 +132,29 @@ class StoreRepository {
         return mShoppingCarts
     }
 
+    fun optimizeRoute(shoppingList: MutableList<ItemCart>): MutableLiveData<MutableList<ItemCart>> {
+        val mOptimizedList: MutableLiveData<MutableList<ItemCart>> = MutableLiveData()
+        ApiHelper.getApi().optimizeList(shoppingList)
+            .enqueue(object : Callback<MutableList<ItemCart>> {
+                override fun onFailure(call: Call<MutableList<ItemCart>>, t: Throwable) {
+                    Log.d("daniel", "failed request")
+                    Log.d("daniel", t.message.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<MutableList<ItemCart>>,
+                    response: Response<MutableList<ItemCart>>
+                ) {
+                    if (response.isSuccessful) {
+                        mOptimizedList.value = response.body()
+                    }
+                }
+
+            })
+
+        return mOptimizedList
+    }
+
     fun updateShoppingCart(itemCart: ItemCart): MutableLiveData<ItemCart> {
         val mShoppingCart: MutableLiveData<ItemCart> = MutableLiveData()
         ApiHelper.getApi().updateShoppingCart(itemCart).enqueue(object : Callback<ItemCart> {
