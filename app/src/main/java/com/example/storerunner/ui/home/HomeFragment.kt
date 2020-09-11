@@ -25,8 +25,6 @@ class HomeFragment : Fragment(), ItemCategoryInterface {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var navController: NavController
 
-    private lateinit var navController: NavController
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +45,6 @@ class HomeFragment : Fragment(), ItemCategoryInterface {
         homeViewModel.getAllCategories().observe(viewLifecycleOwner, Observer {
             initRecycler(it)
         })
-        navController = Navigation.findNavController(view)
     }
 
     private fun initRecycler(mutableList: MutableList<ItemCategory>) {

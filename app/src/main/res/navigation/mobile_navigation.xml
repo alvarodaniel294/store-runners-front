@@ -22,13 +22,21 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.storerunner.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.storerunner.ui.discounts.DiscountsFragment"
         android:label="@string/title_discounts"
-        tools:layout="@layout/fragment_discounts" />
+        tools:layout="@layout/fragment_discounts" >
+        <action
+            android:id="@+id/action_navigation_notifications_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/items_list"

@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.example.storerunner.R
 import com.peterlaurence.mapview.MapView
 import com.peterlaurence.mapview.MapViewConfiguration
@@ -17,6 +19,7 @@ import java.io.InputStream
 class DashboardFragment : Fragment() {
     private lateinit var parentView: ViewGroup
     private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var navController: NavController
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -47,6 +50,10 @@ class DashboardFragment : Fragment() {
         parentView.addView(this, 0)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        navController = Navigation.findNavController(view)
+        super.onViewCreated(view, savedInstanceState)
+    }
 
 
     private fun makeMapView(context: Context): MapView? {
@@ -72,5 +79,17 @@ class DashboardFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.cart_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.cart_menu ->{
+                openShoppingCart()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun openShoppingCart() {
+        navController.navigate(R.id.action_navigation_dashboard_to_shoppingCartFragment)
     }
 }
