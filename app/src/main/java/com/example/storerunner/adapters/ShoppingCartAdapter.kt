@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -25,6 +26,7 @@ class ShoppingCartAdapter(
     interface ShoppingCartAdapterListener {
         fun onRemoveQuantity(item: ItemCart)
         fun onAddQuantity(item: ItemCart)
+        fun deleteItem(item: ItemCart)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingCartViewHolder {
@@ -45,6 +47,9 @@ class ShoppingCartAdapter(
         holder.buttonRemove.setOnClickListener {
             listener.onRemoveQuantity(item)
         }
+        holder.deleteItem.setOnClickListener {
+            listener.deleteItem(item)
+        }
         Glide.with(context).load(Constants.IP_ADDRESS + item.webImage).into(holder.image)
     }
 
@@ -59,5 +64,6 @@ class ShoppingCartAdapter(
         val buttonRemove: MaterialButton = v.removeItemButton
         val quantity: TextView = v.currentItemQuantityTextView
         val image:ImageView = v.cartItemImageView
+        val deleteItem:LinearLayout = v.containerDeleteItem
     }
 }

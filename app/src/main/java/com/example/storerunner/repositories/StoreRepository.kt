@@ -169,4 +169,21 @@ class StoreRepository {
             })
         return mItemToAddToCart
     }
+
+    fun deleteFromCart(itemId: Number): MutableLiveData<Unit> {
+        val mVoid: MutableLiveData<Unit> = MutableLiveData()
+        ApiHelper.getApi().deleteFromShoppingCart(itemId).enqueue(object : Callback<Unit> {
+            override fun onFailure(call: Call<Unit>, t: Throwable) {
+                Log.d("daniel", "failed request")
+                Log.d("daniel", t.message.toString())
+            }
+
+            override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                if (response.isSuccessful) {
+                    mVoid.value = response.body()
+                }
+            }
+        })
+        return mVoid
+    }
 }

@@ -10,9 +10,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.storerunner.R
+import com.example.storerunner.models.ItemCart
 import com.peterlaurence.mapview.MapView
 import com.peterlaurence.mapview.MapViewConfiguration
+import com.peterlaurence.mapview.api.addCallout
+import com.peterlaurence.mapview.api.addMarker
+import com.peterlaurence.mapview.api.setMarkerTapListener
 import com.peterlaurence.mapview.core.TileStreamProvider
+import com.peterlaurence.mapview.demo.fragments.views.MapMarker
+import com.peterlaurence.mapview.demo.fragments.views.MarkerCallout
+import com.peterlaurence.mapview.markers.MarkerTapListener
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 import java.io.InputStream
 
@@ -30,15 +37,14 @@ class DashboardFragment : Fragment() {
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-//        val textView: TextView = root.findViewById(R.id.text_dashboard)
-//        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
         root.also {
             parentView = it.mapContainer as ViewGroup
-            context?.let {ctx->
-                makeMapView(ctx)?.addToFragment()
-            }
+
+            dashboardViewModel.getAllShoppingCarts().observe(viewLifecycleOwner, Observer {
+                context?.let {ctx->
+                    makeMapView(ctx, it)?.addToFragment()
+                }
+            })
         }
         return root
     }
@@ -56,7 +62,8 @@ class DashboardFragment : Fragment() {
     }
 
 
-    private fun makeMapView(context: Context): MapView? {
+    private fun makeMapView(context: Context, cartList: MutableList<ItemCart>): MapView? {
+        val mapView = MapView(context)
         val tileStreamProvider = object : TileStreamProvider {
             override fun getTileStream(row: Int, col: Int, zoomLvl: Int): InputStream? {
                 return try {
@@ -66,14 +73,39 @@ class DashboardFragment : Fragment() {
                 }
             }
         }
+//        val tileSize = 256
+//        val config = MapViewConfiguration(
+//            5, 8192, 8192, tileSize, tileStreamProvider
+//        ).setMaxScale(2f)
+
+//        return MapView(context).apply {
+//            configure(config)
+//        }
         val tileSize = 256
         val config = MapViewConfiguration(
             5, 8192, 8192, tileSize, tileStreamProvider
-        ).setMaxScale(2f)
+        ).setMaxScale(2f).setPadding(tileSize * 2)
 
-        return MapView(context).apply {
-            configure(config)
+        mapView.configure(config)
+        mapView.defineBounds(0.0, 0.0, 1.0, 1.0)
+
+        for (cartItem in cartList){
+            mapView.addNewMarker(cartItem.posX, cartItem.posY, cartItem.name, cartItem.itemQuantity)
         }
+
+        mapView.setMarkerTapListener(object : MarkerTapListener {
+            override fun onMarkerTap(view: View, x: Int, y: Int) {
+                if (view is MapMarker) {
+                    val callout = MarkerCallout(context)
+                    callout.setTitle(view.name)
+                    callout.setSubTitle(view.quantity.toString() + " item(s) to buy")
+                    mapView.addCallout(callout, view.x, view.y, -0.5f, -1.2f, 0f, 0f)
+                    callout.transitionIn()
+                }
+            }
+        })
+        return mapView
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -87,6 +119,14 @@ class DashboardFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun MapView.addNewMarker(x: Double, y: Double, name: String, quantity:Number) {
+        val marker = MapMarker(context, x, y, name, quantity).apply {
+            setImageResource(R.drawable.map_marker)
+        }
+
+        addMarker(marker, x, y)
     }
 
     private fun openShoppingCart() {
